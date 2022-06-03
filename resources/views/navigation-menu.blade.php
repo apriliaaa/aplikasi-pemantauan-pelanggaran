@@ -242,8 +242,8 @@
 
                     <!-- menu profile quick info -->
                     <div class="text-center">
-                        <div class="img-thumbnail rounded-circle" >
-                            <a href="index.html"><img class="w-100 h-100" src="/image/Photos.png" alt="" srcset=""></a>
+                        <div class="img-fluid rounded-circle" >
+                            <a href="index.html"><img class="w-50 h-50" src="/image/Photos.png" alt="" srcset=""></a>
                         </div>
                         <h6 class="text-capitalize mt-4" >Hello {{ Auth::user()->name }}</h6>
                     </div>
@@ -266,6 +266,8 @@
                         </a>
                     </li>
 
+                    @if (auth()->user()->role === "SuperAdmin")
+                    {{-- @can('manage-admin') --}}
                     <li class="sidebar-item  has-sub {{ Request::segment(1) === 'admin' ? 'active' : ''}}"
                         aria-current="true">
                         <a href="#" class='sidebar-link'>
@@ -284,7 +286,9 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
 
+                    @if (auth()->user()->role != "Dosen")
                     <li class="sidebar-item  has-sub {{ Request::segment(1) === 'dosen' ? 'active' : '' }}"
                         aria-current="true">
                         <a href="#" class='sidebar-link'>
@@ -303,7 +307,11 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    {{-- @endif --}}
 
+                    @if (auth()->user()->role === "Dosen")
+                    {{-- @can ('manage-mahasiswa') --}}
                     <li class="sidebar-item {{ Request::routeIs('mahasiswa.create') ? 'active' : '' }}"
                         aria-current="true">
                         <a href="{{ route('mahasiswa.create') }}" class='sidebar-link'>
@@ -311,7 +319,9 @@
                             <span>Mahasiswa</span>
                         </a>
                     </li>
+                    @endif
 
+                    @if (auth()->user()->role == "SuperAdmin" || auth()->user()->role == "Admin")
                     <li class="sidebar-item {{ Request::is('pelanggaran-mahasiswa') ? 'active' : '' }}"
                         aria-current="true">
                         <a href="/pelanggaran-mahasiswa" class='sidebar-link'>
@@ -321,6 +331,7 @@
                         </a>
                     </li>
 
+                    
                     <li class="sidebar-item  has-sub {{ Request::is('laporan-mahasiswa') | Request::is('laporan-prodi') | Request::is('laporan-detail-prodi') ? 'active' : '' }}"
                         aria-current="true">
                         <a href="#" class='sidebar-link'>
@@ -343,6 +354,8 @@
                             </li>
                         </ul>
                     </li>
+                    @endif
+                    {{-- @endif --}}
 
                     <li class="sidebar-item  ">
                         <form method="POST" action="{{ route('logout') }}">

@@ -79,6 +79,7 @@
                                     <div class="form-group">
                                         <label for="image">Foto</label>
                                         <input type="file" name="image" class="form-control">
+                                        <input type="hidden" id="foto" name="foto" value=""/>
                                     </div>
 
                              
@@ -96,6 +97,7 @@
                                     <button type="button" class="btn btn-primary" onclick="startWebcam()">Buka Kamera</button>
                                     <button  type="button" class="btn btn-success" onclick="snapshot()">Ambil Gambar</button>
                                     <button  type="button" class="btn btn-danger" onclick="stopWebcam()">Stop</button>
+                                    <button  type="button" class="btn btn-danger" onclick="sendData()">Send</button>
                                 </div>
                                 <div class="col-sm-12 d-flex justify-content-end">
                                     <button type="submit" class="btn btn-success me-1 mb-1">Save</button>
@@ -149,7 +151,7 @@
       //---------------------
       // TAKE A SNAPSHOT CODE
       //---------------------
-      var canvas, ctx;
+      let canvas, ctx;
 
       function init() {
         // Get the canvas and obtain a context for
@@ -164,7 +166,13 @@
         document.getElementById('ss').classList.remove('d-none')
         document.getElementById('ss').classList.add('d-block')
         init()
+
          // Draws current image from the video element into the canvas
         ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+      }
+
+      function sendData(){
+          const dataUrl = canvas.toDataURL()
+          document.getElementById('foto').value = dataUrl;
       }
 </script>

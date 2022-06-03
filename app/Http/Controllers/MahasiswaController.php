@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\Storage;
 use App\Models\Item;
 use App\Models\Mahasiswa;
 use App\Models\Pelanggaran;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class MahasiswaController extends Controller
 {
@@ -43,13 +46,17 @@ class MahasiswaController extends Controller
      */
     public function store(Request $request)
     {
+        $image = str_replace('data:image/png;base64,', '', $request->image);
+        $image = str_replace(' ', '+', $image);
+        $imageName = Str::random(10).'.'.'png';
+
         $this->validate($request, [
             'name' => 'required',
             'nim' => 'required|min:13',
             'id_user' => 'required',
             'id_pelanggaran' => 'required',
             'id_item' => 'required',
-            'foto' => 'required',
+            // 'foto' => 'required',
         ]);
 
         $mahasiswa = Mahasiswa::create([
@@ -58,10 +65,12 @@ class MahasiswaController extends Controller
             'id_user' => $request->id_user,
             'id_pelanggaran' => $request->id_pelanggaran,
             'id_item' => $request->id_item,
-            'foto' => $request->foto,
+            'foto' => $imageName,
+            
         ]);
 
         if ($mahasiswa) {
+            Storage::disk('local')->put($imageName, base64_decode($image));
             return redirect()->route('mahasiswa.create')->with('success', 'Data berhasil disimpan!');
         }
     }
