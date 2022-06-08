@@ -35,10 +35,12 @@ class Admin
         // return redirect('/dashboard');
         // return $next($request);
 
-        if(auth()->user()->role !== 'SuperAdmin' || auth()->user()->role !== 'Admin'){
-            return redirect('/dashboard');
+        if(auth()->user()->role === 'SuperAdmin' || auth()->user()->role === 'Admin'){
+            // return redirect('/dashboard');
+            return $next($request);
         }
-        return $next($request);
+        // return $next($request);
+        return redirect('/dashboard');
     }
 
     // public function handle($request, Closure $next, ...$role)

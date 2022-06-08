@@ -3,14 +3,14 @@
     </div>
     </div>
     <div id="main">
-        <header class="mb-3">
-            <div class="navbar navbar-light bg-primary">
+        <header class="navbar navbar-expand navbar-light bg-primary mb-3">
+            {{-- <div class="navbar navbar-light bg-primary"> --}}
                 <a href="#" class="burger-btn d-block d-xl-none text-white">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
-
-                <h5 class="text-white">Pelanggaran</h5>
-            </div>
+                
+                <h6 class="text-white mx-3">Pelanggaran</h6>
+            {{-- </div> --}}
         </header>
 
         <div class="page-heading">
@@ -55,6 +55,7 @@
                                         <input type="hidden" name="id_user" value="{{ Auth::user()->id }}">
                                         <input type="text" name="nama_dosen" class="form-control" id="basicInput"
                                             placeholder="" value="{{ Auth::user()->name }}" disabled readonly>
+                                        <input type="hidden" name="id_prodi" value="{{ Auth::user()->id_prodi }}">
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -76,11 +77,9 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="image">Foto</label>
-                                        <input type="file" name="image" class="form-control">
+                                  
                                         <input type="hidden" id="foto" name="foto" value=""/>
-                                    </div>
+                                    
 
                              
                                     
@@ -95,12 +94,12 @@
                                 <canvas class="d-none mx-auto"  id="myCanvas" width="400" height="300"></canvas>  
                                 <div class="col-12 text-center">
                                     <button type="button" class="btn btn-primary" onclick="startWebcam()">Buka Kamera</button>
-                                    <button  type="button" class="btn btn-success" onclick="snapshot()">Ambil Gambar</button>
-                                    <button  type="button" class="btn btn-danger" onclick="stopWebcam()">Stop</button>
-                                    <button  type="button" class="btn btn-danger" onclick="sendData()">Send</button>
+                                    <button  type="button" class="btn btn-success d-none" id="buttonSnap"  onclick="snapshot()">Ambil Gambar</button>
+                                    {{-- <button  type="button" class="btn btn-danger" onclick="stopWebcam()">Stop</button> --}}
+                                    {{-- <button  type="button" class="btn btn-danger">Send</button> --}}
                                 </div>
                                 <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success me-1 mb-1">Save</button>
+                                    <button type="submit"  onclick="sendData()"  class="btn btn-success me-1 mb-1">Save</button>
                                 </div>
                             </div>
                         </div>
@@ -119,6 +118,8 @@
       function startWebcam() {
         document.getElementById('video').classList.remove('d-none')
         document.getElementById('video').classList.add('d-block')
+        document.getElementById('buttonSnap').classList.remove('d-none')
+        document.getElementById('buttonSnap').classList.add('d-inline')
         if (navigator.getUserMedia) {
            navigator.getUserMedia (
 
@@ -169,6 +170,8 @@
 
          // Draws current image from the video element into the canvas
         ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+
+        sendData()
       }
 
       function sendData(){

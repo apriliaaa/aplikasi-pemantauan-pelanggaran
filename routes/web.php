@@ -4,8 +4,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\PelanggaranController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckRole;
+use App\Models\Pelanggaran;
+use Facade\FlareClient\Http\Response;
+use Facade\FlareClient\Stacktrace\File;
 use GuzzleHttp\Middleware;
 
 /*
@@ -88,14 +92,24 @@ Route::prefix('admin')->middleware('superAdmin')->group(function(){
 
 
 Route::prefix('dosen')->middleware('admin')->group(function(){
-    Route::get('/create-dosen', [DosenController::class, "create"])->name("dosen.create");
-    Route::post('/create-dosen', [DosenController::class, "store"])->name("dosen.save");
+    Route::get('/create-dosen', [DosenController::class, "create"])->name('dosen.create');
+    Route::post('/create-dosen', [DosenController::class, "store"])->name('dosen.save');
     Route::get('/data-dosen', [DosenController::class, "index"])->name('dosen.data');
     Route::get('/data-dosen/{id}', [DosenController::class, "destroy"])->name('dosen.delete');
     Route::get('/edit-dosen/{id}', [DosenController::class, "edit"])->name('dosen.edit');
     Route::post('/edit-dosen/{id}', [DosenController::class, "update"])->name('dosen.update');
 });
 
+Route::get('/prodi', [PelanggaranController::class, "index"])->name('prodi');
 
-Route::get('/create-dataMahasiswa', [MahasiswaController::class, "create"])->name("mahasiswa.create");
+Route::get('/pelanggaran', [PelanggaranController::class, "index"])->name('pelanggaran');
+Route::post('/create-pelanggaran', [PelanggaranController::class, "store"])->name('pelanggaran.create');
+Route::get('/pelanggaran/{id}', [Pelanggaran::class, "destroy"])->name("pelanggaran.delete");
+
+Route::get('/mahasiswa/create-dataMahasiswa', [MahasiswaController::class, "create"])->name("mahasiswa.create");
 Route::post('/mahasiswa/create-mahasiswa', [MahasiswaController::class, "store"])->name("mahasiswa.save");
+Route::get('/mahasiswa/data-mahasiswa', [MahasiswaController::class, "index"])->name('mahasiswa.data');
+
+Route::get('/laporan/detail-prodi', [MahasiswaController::class, "detailReport"])->name("laporan.detail");
+Route::get('/laporan/prodi', [MahasiswaController::class, "prodiReport"])->name("laporan.prodi");
+Route::get('/laporan/mahasiswa', [MahasiswaController::class, "mahasiswaReport"])->name("laporan.mahasiswa");

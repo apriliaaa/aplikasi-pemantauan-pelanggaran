@@ -17,10 +17,11 @@ class CreateMahasiswaTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('nim');
-            $table->foreignId('id_user')->constrained('users');
-            $table->foreignId('id_pelanggaran')->constrained('pelanggaran');
-            $table->foreignId('id_item')->constrained('item');
-            $table->string('foto');
+            $table->foreignId('id_prodi')->constrained('program_studi');
+            // $table->foreignId('id_user')->constrained('users');
+            // $table->foreignId('id_pelanggaran')->constrained('pelanggaran');
+            // $table->foreignId('id_item')->constrained('item');
+            // $table->string('foto');
             $table->timestamps();
         });
     }

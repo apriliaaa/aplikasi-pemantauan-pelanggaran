@@ -12,19 +12,26 @@
              </div>
          </div>
      </div> --}}
-     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-     </div>
-     </div>
+
+     {{-- <header class="mb-3">
+        <a href="#" class="burger-btn d-block d-xl-none">
+            <i class="bi bi-justify fs-3"></i>
+        </a>
+    </header> --}}
+
+     {{-- <button class="sidebar-toggler btn x"><i data-feather="x"></i></button> --}}
+     {{-- </div> --}}
+     {{-- </div> --}}
      <div id="main">
-        <header class="mb-3">
-            <div class="navbar navbar-light bg-primary">
-                <a href="#" class="burger-btn d-block d-xl-none text-white">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-    
-                <h5 class="text-white">Grafik Mahasiswa Pelanggar Tata Tertib</h5>
-            </div>
-        </header>
+         <div class="navbar navbar-expand navbar-light bg-primary mb-3">
+             {{-- <div class="navbar navbar-light bg-primary"> --}}
+                 <a href="#" class="burger-btn d-block d-xl-none text-white">
+                     <i class="bi bi-justify fs-3"></i>
+                 </a>
+                 
+                 <h6 class="text-white mx-3">Grafik Mahasiswa Pelanggar Tata Tertib</h6>
+             {{-- </div> --}}
+         </div>
 
          <div class="page-heading">
              {{-- <div class="page-title">

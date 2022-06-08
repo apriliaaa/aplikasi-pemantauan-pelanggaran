@@ -23,6 +23,9 @@ class User extends Authenticatable
      *
      * @var string[]
      */
+
+    public $table = 'users';
+    protected $primaryKey = 'id';
     protected $fillable = [
         'name',
         'email',
@@ -30,11 +33,6 @@ class User extends Authenticatable
         'password',
         'id_prodi',
     ];
-
-    public function program_studi()
-    {
-        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
-    }
 
     /**
      * The attributes that should be hidden for serialization.
@@ -65,4 +63,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    
+    public function program_studi()
+    {
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
+    }
+
+    public function daftar_pelanggaran()
+    {
+        return $this->belongsToMany(DaftarPelanggaran::class);
+    }
+    // public function mahasiswa()
+    // {
+    //     return $this->belongsToMany(Mahasiswa::class, 'detail_pelanggaran', 'id_user');
+    // }
+
+    // public function mahasiswa()
+    // {
+    //     return $this->hasMany(Mahasiswa::class);
+    // }
 }

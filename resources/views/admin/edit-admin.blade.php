@@ -3,14 +3,14 @@
     </div>
     </div>
     <div id="main">
-        <header class="mb-3">
-            <div class="navbar navbar-light bg-primary">
+        <header class="navbar navbar-expand navbar-light bg-primary mb-3">
+            {{-- <div class="navbar navbar-light bg-primary"> --}}
                 <a href="#" class="burger-btn d-block d-xl-none text-white">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
-
-                <h5 class="text-white">Edit Data Admin</h5>
-            </div>
+                
+                <h6 class="text-white mx-3">Edit Data Admin</h6>
+            {{-- </div> --}}
         </header>
 
         <div class="page-heading">

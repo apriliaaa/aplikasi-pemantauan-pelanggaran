@@ -14,7 +14,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
                 
-                <h6 class="text-white mx-3">Data Admin</h6>
+                <h6 class="text-white mx-3">Data pelanggaran Mahasiswa</h6>
             {{-- </div> --}}
         </header>
         <div class="page-heading">
@@ -39,9 +39,10 @@
                         <h4 class="card-title">Create Admin</h4>
                     </div> --}}
                     <div class="card-body">
-                        <form action="{{ route('admin.data') }}" method="get">
+                        <form action="{{ route('mahasiswa.data') }}" method="get">
                             <div class="row">
                                 <div class="col-md-6">
+    
                                     <div class="input-group">
                                         <div class="col-auto">
                                             <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}">
@@ -49,8 +50,7 @@
                                         <button class="btn btn-success" type="submit">Cari</button>
                                     </div>
                                 </div>
-                            </div>
-
+                            </div>                        
                         </form>
                         {{-- <div class="row">
                             <div class="col-md-6">
@@ -93,7 +93,7 @@
                     <div class="col-12">
                         <div class="card">
                             {{-- <div class="card-header">
-                                {{ $admin->links() }}
+                                <h4 class="card-title">Bordered table</h4>
                             </div> --}}
                             <div class="card-content">
                                 {{-- <div class="card-body">
@@ -109,48 +109,42 @@
                                     <table class="table table-bordered mb-0">
                                         <thead class="text-center">
                                             <tr>
-                                                <th>No</th>
-                                                <th>Nama Admin</th>
-                                                <th>Program Studi</th>
-                                                <th>E-mail / Username</th>
-                                                <th>Role</th>
+                                                <th>NIM</th>
+                                                <th>Nama Mahasiswa</th>
+                                                <th>Foto</th>
+                                                <th>Jenis Pelanggaran</th>
+                                                <th>Item Disita</th>
+                                                <th>Dosen Penyita</th>
                                                 <th>Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($admin as $item)
+                                            @foreach ($daftar_pelanggaran as $list)
                                                 <tr>
-                                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    {{-- <td>{{ $item->id_prodi }}</td> --}}
-                                                    <td>{{ $item->program_studi->nama_prodi }}</td>
-                                                    <td>{{ $item->email }}</td>
-                                                    <td>{{ $item->role }}</td>
+                                                    <td>{{ $list->mahasiswa->nim }}</td>
+                                                    <td>{{ $list->mahasiswa->name }}</td>
+                                                    <td>
+                                                        <img src="{{ asset('storage/'.$list->foto) }}" alt="" style="height: 100px; width: 150px;">
+                                                        </td>
+                                                    <td>{{ $list->pelanggaran->nama_pelanggaran }}</td>
+                                                    <td>{{ $list->item->nama_item }}</td>
+                                                    <td>{{ $list->user->name }}</td>
                                                     <td class="text-center">
-                                                        <a class="btn btn-primary" href="{{ route('admin.edit', $item->id) }}">
-                                                            <i class="fa-solid fa-file-pen"></i>
-                                                        </a>
-                                                        <a class="btn btn-danger" href="{{ route('admin.delete', $item->id) }}">
-                                                            <i class="fa-solid fa-trash"></i>
+                                                        <a class="btn btn-danger" href="#">
+                                                            {{-- <i class="fa-solid fa-trash"></i> --}}
+                                                            Disita
                                                         </a>
                                                     </td>
                                                 </tr>
-                                                
                                             @endforeach
-
                                         </tbody>
                                     </table>
-                                    {{ $admin->appends(['search' => request()->query('search')])->links() }}
+                                    {{ $daftar_pelanggaran->links() }}
                                 </div>
                             </div>
-
-                            
                         </div>
-                        
-                        
                     </div>
                 </div>
-                
             </section>
         </div>
 </x-app-layout>

@@ -8,14 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class Item extends Model
 {
     use HasFactory;
-    protected $table = 'item';
+    public $table = 'item';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id','nama_item'
+        'nama_item'
     ];
 
-    public function mahasiswa()
+    public function daftar_pelanggaran()
     {
-        return $this->hasMany(Mahasiswa::class);
+        return $this->belongsToMany(DaftarPelanggaran::class);
     }
+
+    // public function mahasiswa()
+    // {
+    //     return $this->belongsTo(Mahasiswa::class);
+    // }
 }

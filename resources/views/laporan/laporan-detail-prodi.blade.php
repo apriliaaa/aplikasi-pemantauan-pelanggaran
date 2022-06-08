@@ -14,7 +14,7 @@
                     <i class="bi bi-justify fs-3"></i>
                 </a>
                 
-                <h6 class="text-white mx-3">Data Admin</h6>
+                <h6 class="text-white mx-3">Laporan</h6>
             {{-- </div> --}}
         </header>
         <div class="page-heading">
@@ -39,12 +39,18 @@
                         <h4 class="card-title">Create Admin</h4>
                     </div> --}}
                     <div class="card-body">
-                        <form action="{{ route('admin.data') }}" method="get">
+                        <form action="#" method="get">
                             <div class="row">
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="col-auto">
-                                            <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}">
+                                            <select class="form-select" name="search" id="search">
+                                                <option value="">Pilih Program Studi</option>
+                                                @foreach ($program_studi as $prodi)
+                                                    <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
+                                                @endforeach
+                                            </select>
+                                            {{-- <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}"> --}}
                                         </div>
                                         <button class="btn btn-success" type="submit">Cari</button>
                                     </div>
@@ -110,20 +116,17 @@
                                         <thead class="text-center">
                                             <tr>
                                                 <th>No</th>
-                                                <th>Nama Admin</th>
-                                                <th>Program Studi</th>
-                                                <th>E-mail / Username</th>
-                                                <th>Role</th>
-                                                <th>Aksi</th>
+                                                <th>Jenis Pelanggaran</th>
+                                                <th>Jumlah Pelanggaran</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            @foreach ($admin as $item)
+                                            {{-- @foreach ($admin as $item) --}}
                                                 <tr>
-                                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    {{-- <td>{{ $item->id_prodi }}</td> --}}
-                                                    <td>{{ $item->program_studi->nama_prodi }}</td>
+                                                    <td class="text-center"></td>
+                                                    <td></td>
+                                                    <td></td>
+                                                    {{-- <td>{{ $item->program_studi->nama_prodi }}</td>
                                                     <td>{{ $item->email }}</td>
                                                     <td>{{ $item->role }}</td>
                                                     <td class="text-center">
@@ -133,14 +136,14 @@
                                                         <a class="btn btn-danger" href="{{ route('admin.delete', $item->id) }}">
                                                             <i class="fa-solid fa-trash"></i>
                                                         </a>
-                                                    </td>
+                                                    </td> --}}
                                                 </tr>
                                                 
-                                            @endforeach
+                                            {{-- @endforeach --}}
 
                                         </tbody>
                                     </table>
-                                    {{ $admin->appends(['search' => request()->query('search')])->links() }}
+                                    {{-- {{ $admin->appends(['search' => request()->query('search')])->links() }} --}}
                                 </div>
                             </div>
 

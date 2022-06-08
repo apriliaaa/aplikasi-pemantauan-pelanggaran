@@ -11,11 +11,19 @@ class Pelanggaran extends Model
     protected $table = 'pelanggaran';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id','nama_pelanggaran'
+        'nama_pelanggaran'
     ];
 
-    public function mahasiswa()
-    {
-        return $this->hasMany(Mahasiswa::class);
+    public function daftar_pelanggaran(){
+        return $this->belongsToMany(DaftarPelanggaran::class);
     }
+
+    // public function mahasiswa(){
+    //     return $this->belongsToMany(Mahasiswa::class);
+    // }
+
+    // public function mahasiswa()
+    // {
+    //     return $this->belongsToMany(Mahasiswa::class, 'table_pelanggaran');
+    // }
 }

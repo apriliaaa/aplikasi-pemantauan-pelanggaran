@@ -1,4 +1,4 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
+<nav x-data="{ open: false }" class=" border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     {{-- <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
@@ -242,12 +242,15 @@
 
                     <!-- menu profile quick info -->
                     <div class="text-center">
-                        <div class="img-fluid rounded-circle" >
+                        <div class="img-fluid rounded-circle">
                             <a href="index.html"><img class="w-50 h-50" src="/image/Photos.png" alt="" srcset=""></a>
                         </div>
-                        <h6 class="text-capitalize mt-4" >Hello {{ Auth::user()->name }}</h6>
+                        <h6 class="text-capitalize mt-4">Hello {{ Auth::user()->name }}</h6>
                     </div>
-                    
+                    <div class="toggler">
+                        <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                    </div>
+
 
                 </div>
             </div>
@@ -276,11 +279,11 @@
                             <span>Admin</span>
                         </a>
                         <ul class="submenu ">
-                            <li class="submenu-item {{ route('admin.create') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('admin.create') ? 'active' : '' }}"
                                 aria-current="true">
                                 <a href="{{route('admin.create')}}">Input Admin</a>
                             </li>
-                            <li class="submenu-item {{ route('admin.data') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('admin.data') ? 'active' : '' }}"
                                 aria-current="true">
                                 <a href="{{ route('admin.data') }}">Data Admin</a>
                             </li>
@@ -297,11 +300,11 @@
                             <span>Dosen</span>
                         </a>
                         <ul class="submenu ">
-                            <li class="submenu-item {{ route('dosen.create') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('dosen.create') ? 'active' : '' }}"
                                 aria-current="true">
                                 <a href="{{ route('dosen.create') }}">Input Dosen</a>
                             </li>
-                            <li class="submenu-item {{ route('dosen.data') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('dosen.data') ? 'active' : '' }}"
                                 aria-current="true">
                                 <a href="{{ route('dosen.data') }}">Data Dosen</a>
                             </li>
@@ -309,6 +312,24 @@
                     </li>
                     @endif
                     {{-- @endif --}}
+
+                    <li class="sidebar-item {{ Request::routeIs('prodi') ? 'active' : '' }}"
+                        aria-current="true">
+                        <a href="{{ route('prodi') }}" class='sidebar-link'>
+                            <i class="fa-solid fa-screen-users"></i>
+                            <span>Prodi</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-item {{ Request::routeIs('pelanggaran') ? 'active' : '' }}"
+                        aria-current="true">
+                        <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
+                            {{-- <i class="bi bi-file-earmark-medical-fill"></i> --}}
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                            {{-- <i class="fa-solid fa-chart-pie"></i> --}}
+                            <span>Pelanggaran</span>
+                        </a>
+                    </li>
 
                     @if (auth()->user()->role === "Dosen")
                     {{-- @can ('manage-mahasiswa') --}}
@@ -322,17 +343,17 @@
                     @endif
 
                     @if (auth()->user()->role == "SuperAdmin" || auth()->user()->role == "Admin")
-                    <li class="sidebar-item {{ Request::is('pelanggaran-mahasiswa') ? 'active' : '' }}"
+                    <li class="sidebar-item {{ Request::routeIs('mahasiswa.data') ? 'active' : '' }}"
                         aria-current="true">
-                        <a href="/pelanggaran-mahasiswa" class='sidebar-link'>
+                        <a href="{{ route('mahasiswa.data') }}" class='sidebar-link'>
                             {{-- <i class="bi bi-file-earmark-medical-fill"></i> --}}
                             <i class="fa-solid fa-chart-pie"></i>
                             <span>Pelanggaran Mahasiswa</span>
                         </a>
                     </li>
 
-                    
-                    <li class="sidebar-item  has-sub {{ Request::is('laporan-mahasiswa') | Request::is('laporan-prodi') | Request::is('laporan-detail-prodi') ? 'active' : '' }}"
+
+                    <li class="sidebar-item  has-sub {{ Request::segment(1) === 'laporan' ? 'active' : '' }}"
                         aria-current="true">
                         <a href="#" class='sidebar-link'>
                             {{-- <i class="bi bi-pen-fill"></i> --}}
@@ -340,17 +361,17 @@
                             <span>Laporan</span>
                         </a>
                         <ul class="submenu ">
-                            <li class="submenu-item {{ Request::is('laporan-mahasiswa') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('laporan.mahasiswa') ? 'active' : '' }}"
                                 aria-current="true">
-                                <a href="/laporan-mahasiswa">Mahasiswa</a>
+                                <a href="{{ route('laporan.mahasiswa') }}">Mahasiswa</a>
                             </li>
-                            <li class="submenu-item {{ Request::is('laporan-prodi') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('laporan.prodi') ? 'active' : '' }}"
                                 aria-current="true">
-                                <a href="/laporan-prodi">Prodi</a>
+                                <a href="{{ route('laporan.prodi') }}">Prodi</a>
                             </li>
-                            <li class="submenu-item {{ Request::is('laporan-detail-prodi') ? 'active' : '' }}"
+                            <li class="submenu-item {{ Request::routeIs('laporan.detail') ? 'active' : '' }}"
                                 aria-current="true">
-                                <a href="/laporan-detail-prodi">Detail Prodi</a>
+                                <a href="{{ route('laporan.detail') }}">Detail Prodi</a>
                             </li>
                         </ul>
                     </li>
@@ -371,4 +392,7 @@
 
                 </ul>
             </div>
+        </div>
+        <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+    </div>
 </nav>

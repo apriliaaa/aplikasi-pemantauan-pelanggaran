@@ -8,14 +8,19 @@ use Illuminate\Database\Eloquent\Model;
 class ProgramStudi extends Model
 {
     use HasFactory;
-    protected $table = 'program_studi';
+    public $table = 'program_studi';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id','nama_prodi'
+        'nama_prodi'
     ];
 
     public function user()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function mahasiswa()
+    {
+        return $this->hasMany(Mahasiswa::class);
     }
 }

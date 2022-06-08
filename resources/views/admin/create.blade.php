@@ -1,16 +1,15 @@
 <x-app-layout>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-    </div>
-    </div>
+   
     <div id="main">
-        <header class="mb-3">
-            <div class="navbar navbar-light bg-primary">
+        <header class="navbar navbar-expand navbar-light bg-primary mb-3">
+            {{-- <div class="navbar navbar-light bg-primary"> --}}
                 <a href="#" class="burger-btn d-block d-xl-none text-white">
                     <i class="bi bi-justify fs-3"></i>
                 </a>
-
-                <h5 class="text-white">Data Admin</h5>
-            </div>
+                
+                <h6 class="text-white mx-3">Data Admin</h6>
+            {{-- </div> --}}
         </header>
 
         <div class="page-heading">
@@ -29,6 +28,7 @@
                      </div>
                     </div> --}}
             </div>
+        </div>
 
             @if (session('status'))
             <div class="mb-4 font-medium text-sm text-green-600">
@@ -87,7 +87,7 @@
                     </div>
                 </form>
             </section>
-        </div>
+        {{-- </div> --}}
     </div>
     
     

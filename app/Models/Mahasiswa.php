@@ -8,25 +8,43 @@ use Illuminate\Database\Eloquent\Model;
 class Mahasiswa extends Model
 {
     use HasFactory;
-    protected $table = 'mahasiswa';
+    public $table = 'mahasiswa';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'id', 'name', 'nim', 'id_user', 
-        'id_pelanggaran', 'id_item', 'foto',
+        'name', 'nim', 'id_prodi'
     ];
 
-    public function user()
+    public function daftar_pelanggaran()
     {
-        return $this->belongsTo(User::class, 'id_user');
+        return $this->belongsToMany(DaftarPelanggaran::class);
     }
 
-    public function pelanggaran()
-    {
-        return $this->hasMany(Pelanggaran::class, 'id_pelanggaran');
-    }
+    // public function pelanggaran(){
+    //     return $this->belongsToMany(Pelanggaran::class, 'detail_pelanggaran');
+    // }
 
-    public function item()
+    // public function user()
+    // {
+    //     return $this->belongsToMany(User::class);
+    // }
+
+    // public function user()
+    // {
+    //     return $this->belongsToMany(User::class, 'id_user');
+    // }
+
+    // public function pelanggaran()
+    // {
+    //     return $this->belongsToMany(Pelanggaran::class, 'id_pelanggaran');
+    // }
+
+    // public function item()
+    // {
+    //     return $this->hasMany(Item::class, 'id_item');
+    // }
+
+    public function program_studi()
     {
-        return $this->hasMany(Item::class, 'id_item');
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
     }
 }
