@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DokumenController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PelanggaranController;
@@ -107,7 +108,11 @@ Route::get('/prodi/{id}', [ProdiController::class, "destroy"])->name("prodi.dele
 
 Route::get('/pelanggaran', [PelanggaranController::class, "index"])->name('pelanggaran');
 Route::post('/create-pelanggaran', [PelanggaranController::class, "store"])->name('pelanggaran.create');
-Route::get('/pelanggaran/{id}', [Pelanggaran::class, "destroy"])->name("pelanggaran.delete");
+Route::get('/pelanggaran/{id}', [PelanggaranController::class, "destroy"])->name("pelanggaran.delete");
+
+Route::get('/dokumen', [DokumenController::class, "index"])->name('dokumen');
+Route::post('/create-dokumen', [DokumenController::class, "store"])->name('dokumen.create');
+Route::get('/dokumen/{id}', [DokumenController::class, "destroy"])->name("dokumen.delete");
 
 Route::get('/mahasiswa/create-dataMahasiswa', [MahasiswaController::class, "create"])->name("mahasiswa.create");
 Route::post('/mahasiswa/create-mahasiswa', [MahasiswaController::class, "store"])->name("mahasiswa.save");

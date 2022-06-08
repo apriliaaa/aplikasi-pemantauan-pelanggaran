@@ -331,6 +331,16 @@
                         </a>
                     </li>
 
+                    <li class="sidebar-item {{ Request::routeIs('dokumen') ? 'active' : '' }}"
+                        aria-current="true">
+                        <a href="{{ route('dokumen') }}" class='sidebar-link'>
+                            {{-- <i class="bi bi-file-earmark-medical-fill"></i> --}}
+                            <i class="fa-solid fa-address-card"></i>
+                            {{-- <i class="fa-solid fa-chart-pie"></i> --}}
+                            <span>Item Disita</span>
+                        </a>
+                    </li>
+
                     @if (auth()->user()->role === "Dosen")
                     {{-- @can ('manage-mahasiswa') --}}
                     <li class="sidebar-item {{ Request::routeIs('mahasiswa.create') ? 'active' : '' }}"
