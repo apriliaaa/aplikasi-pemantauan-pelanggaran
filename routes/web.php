@@ -5,6 +5,7 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DosenController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PelanggaranController;
+use App\Http\Controllers\ProdiController;
 use App\Http\Middleware\Admin;
 use App\Http\Middleware\CheckRole;
 use App\Models\Pelanggaran;
@@ -100,7 +101,9 @@ Route::prefix('dosen')->middleware('admin')->group(function(){
     Route::post('/edit-dosen/{id}', [DosenController::class, "update"])->name('dosen.update');
 });
 
-Route::get('/prodi', [PelanggaranController::class, "index"])->name('prodi');
+Route::get('/prodi', [ProdiController::class, "index"])->name('prodi');
+Route::post('/create-prodi', [ProdiController::class, "store"])->name('prodi.create');
+Route::get('/prodi/{id}', [ProdiController::class, "destroy"])->name("prodi.delete");
 
 Route::get('/pelanggaran', [PelanggaranController::class, "index"])->name('pelanggaran');
 Route::post('/create-pelanggaran', [PelanggaranController::class, "store"])->name('pelanggaran.create');

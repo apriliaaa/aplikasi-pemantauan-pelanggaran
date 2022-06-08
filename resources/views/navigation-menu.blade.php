@@ -316,7 +316,7 @@
                     <li class="sidebar-item {{ Request::routeIs('prodi') ? 'active' : '' }}"
                         aria-current="true">
                         <a href="{{ route('prodi') }}" class='sidebar-link'>
-                            <i class="fa-solid fa-screen-users"></i>
+                            <i class="fa-solid fa-graduation-cap"></i>
                             <span>Prodi</span>
                         </a>
                     </li>
