@@ -145,9 +145,13 @@
                                                     {{-- <a class="btn btn-primary" href="#">
                                                         <i class="fa-solid fa-file-pen"></i>
                                                     </a> --}}
-                                                    <a class="btn btn-danger" href="{{ route('dokumen.delete', $item->id) }}">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </a>
+                                                    <form method="POST" action="{{ route('dokumen.delete', $item->id) }}">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <button type="submit" class="btn btn-danger show-alert-delete-box" data-toggle="tooltip" title='Delete'>
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -162,3 +166,27 @@
             </section>
         </div>
 </x-app-layout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Apakah anda ingin menghapus data ini?",
+            text: "Jika anda menghapus data ini, data akan dihapus permanent.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Tidak","Iya"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#8cd4f5',
+            confirmButtonText: 'Hapus data!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>

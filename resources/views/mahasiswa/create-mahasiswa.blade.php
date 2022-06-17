@@ -1,15 +1,14 @@
 <x-app-layout>
     <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
-    </div>
-    </div>
+
     <div id="main">
         <header class="navbar navbar-expand navbar-light bg-primary mb-3">
             {{-- <div class="navbar navbar-light bg-primary"> --}}
-                <a href="#" class="burger-btn d-block d-xl-none text-white">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-                
-                <h6 class="text-white mx-3">Pelanggaran</h6>
+            <a href="#" class="burger-btn d-block d-xl-none text-white">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+
+            <h6 class="text-white mx-3">Pelanggaran</h6>
             {{-- </div> --}}
         </header>
 
@@ -59,6 +58,19 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
+                                    
+                                    @if (auth()->user()->role === "SuperAdmin")
+                                    <div class="form-group">
+                                        <label for="programStudi">Program Studi</label>
+                                        <select class="form-select" id="id_prodi" name="id_prodi">
+                                            <option value="">Pilih Program Studi</option>
+                                            @foreach ($program_studi as $prodi)
+                                            <option value="{{ $prodi->id }}">{{ $prodi->nama_prodi }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    @endif
+                                    
                                     <div class="form-group">
                                         <label for="programStudi">Jenis Pelanggaran</label>
                                         <select class="form-select" id="id_pelanggaran" name="id_pelanggaran">
@@ -77,30 +89,34 @@
                                             @endforeach
                                         </select>
                                     </div>
-                                  
-                                        <input type="hidden" id="foto" name="foto" value=""/>
-                                    
 
-                             
-                                    
+                                    <input type="hidden" id="foto" name="foto" value="" />
+
+
+
+
                                 </div>
                                 <p>
-                                {{-- <button type="button" onclick="startWebcam();">Start WebCam</button> --}}
-                                {{-- <button type="button" onclick="stopWebcam();">Stop WebCam</button> 
+                                    {{-- <button type="button" onclick="startWebcam();">Start WebCam</button> --}}
+                                    {{-- <button type="button" onclick="stopWebcam();">Stop WebCam</button> 
                                     <button type="button" onclick="snapshot();">Take Snapshot</button>  --}}
                                 </p>
-                                <video class="d-none" onclick="snapshot(this);" width=400 height=400 id="video" autoplay></video>
+                                <video class="d-none" onclick="snapshot(this);" width=400 height=400 id="video"
+                                    autoplay></video>
                                 <p class="d-none text-center" id="ss">Hasil Gambar : <p>
-                                <canvas class="d-none mx-auto"  id="myCanvas" width="400" height="300"></canvas>  
-                                <div class="col-12 text-center">
-                                    <button type="button" class="btn btn-primary" onclick="startWebcam()">Buka Kamera</button>
-                                    <button  type="button" class="btn btn-success d-none" id="buttonSnap"  onclick="snapshot()">Ambil Gambar</button>
-                                    {{-- <button  type="button" class="btn btn-danger" onclick="stopWebcam()">Stop</button> --}}
-                                    {{-- <button  type="button" class="btn btn-danger">Send</button> --}}
-                                </div>
-                                <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit"  onclick="sendData()"  class="btn btn-success me-1 mb-1">Save</button>
-                                </div>
+                                        <canvas class="d-none mx-auto" id="myCanvas" width="400" height="300"></canvas>
+                                        <div class="col-12 text-center">
+                                            <button type="button" class="btn btn-primary" onclick="startWebcam()">Buka
+                                                Kamera</button>
+                                            <button type="button" class="btn btn-success d-none" id="buttonSnap"
+                                                onclick="snapshot()">Ambil Gambar</button>
+                                            {{-- <button  type="button" class="btn btn-danger" onclick="stopWebcam()">Stop</button> --}}
+                                            {{-- <button  type="button" class="btn btn-danger">Send</button> --}}
+                                        </div>
+                                        <div class="col-sm-12 d-flex justify-content-end">
+                                            <button type="submit" 
+                                                class="btn btn-success me-1 mb-1">Save</button>
+                                        </div>
                             </div>
                         </div>
                     </div>
@@ -112,70 +128,70 @@
 
 
 <script>
-        let video;
-      let webcamStream;
-            
-      function startWebcam() {
+    let video;
+    let webcamStream;
+
+    function startWebcam() {
         document.getElementById('video').classList.remove('d-none')
         document.getElementById('video').classList.add('d-block')
         document.getElementById('buttonSnap').classList.remove('d-none')
         document.getElementById('buttonSnap').classList.add('d-inline')
         if (navigator.getUserMedia) {
-           navigator.getUserMedia (
+            navigator.getUserMedia(
 
-              // constraints
-              {
-                 video: true,
-                 audio: false
-              },
+                // constraints
+                {
+                    video: true,
+                    audio: false
+                },
 
-              // successCallback
-              function(localMediaStream) {
-                  video = document.querySelector('video');
-                 video.srcObject=localMediaStream;
-                 webcamStream = localMediaStream;
-              },
+                // successCallback
+                function (localMediaStream) {
+                    video = document.querySelector('video');
+                    video.srcObject = localMediaStream;
+                    webcamStream = localMediaStream;
+                },
 
-              // errorCallback
-              function(err) {
-                 console.log("The following error occured: " + err);
-              }
-           );
+                // errorCallback
+                function (err) {
+                    console.log("The following error occured: " + err);
+                }
+            );
         } else {
-           console.log("getUserMedia not supported");
-        }  
-      }
-            
-      function stopWebcam() {
-          webcamStream.stop();
-      }
-      //---------------------
-      // TAKE A SNAPSHOT CODE
-      //---------------------
-      let canvas, ctx;
+            console.log("getUserMedia not supported");
+        }
+    }
 
-      function init() {
+    function stopWebcam() {
+        webcamStream.stop();
+    }
+    //---------------------
+    // TAKE A SNAPSHOT CODE
+    //---------------------
+    let canvas, ctx;
+
+    function init() {
         // Get the canvas and obtain a context for
         // drawing in it
         canvas = document.getElementById("myCanvas");
         ctx = canvas.getContext('2d');
-      }
+    }
 
-      function snapshot() {
+    function snapshot() {
         document.getElementById('myCanvas').classList.remove('d-none')
         document.getElementById('myCanvas').classList.add('d-block')
         document.getElementById('ss').classList.remove('d-none')
         document.getElementById('ss').classList.add('d-block')
         init()
 
-         // Draws current image from the video element into the canvas
-        ctx.drawImage(video, 0,0, canvas.width, canvas.height);
+        // Draws current image from the video element into the canvas
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         sendData()
-      }
+    }
 
-      function sendData(){
-          const dataUrl = canvas.toDataURL()
-          document.getElementById('foto').value = dataUrl;
-      }
+    function sendData() {
+        const dataUrl = canvas.toDataURL()
+        document.getElementById('foto').value = dataUrl;
+    }
 </script>

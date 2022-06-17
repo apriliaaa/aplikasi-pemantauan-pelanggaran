@@ -5,16 +5,16 @@
     <div>
         
     </div> --}}
-    
+
     <div id="main">
-        
+
         <header class="navbar navbar-expand navbar-light bg-primary mb-3">
             {{-- <div class="navbar navbar-light bg-primary"> --}}
-                <a href="#" class="burger-btn d-block d-xl-none text-white">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-                
-                <h6 class="text-white mx-3">Data Dosen</h6>
+            <a href="#" class="burger-btn d-block d-xl-none text-white">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+
+            <h6 class="text-white mx-3">Data Dosen</h6>
             {{-- </div> --}}
         </header>
         <div class="page-heading">
@@ -42,15 +42,16 @@
                         <form action="{{ route('dosen.data') }}" method="get">
                             <div class="row">
                                 <div class="col-md-6">
-    
+
                                     <div class="input-group">
                                         <div class="col-auto">
-                                            <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}">
+                                            <input type="search" name="search" class="form-control" id="search"
+                                                placeholder="" value="{{ request('search') }}">
                                         </div>
                                         <button class="btn btn-success" type="submit">Cari</button>
                                     </div>
                                 </div>
-                            </div>                        
+                            </div>
                         </form>
                         {{-- <div class="row">
                             <div class="col-md-6">
@@ -118,22 +119,35 @@
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            @php
+                                            $no=1
+                                            @endphp
                                             @foreach ($dosen as $item)
-                                                <tr>
-                                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    <td>{{ $item->program_studi->nama_prodi }}</td>
-                                                    <td>{{ $item->email }}</td>
-                                                    <td>{{ $item->role }}</td>
-                                                    <td class="text-center">
-                                                        <a class="btn btn-primary" href="{{ route('dosen.edit', $item->id) }}">
-                                                            <i class="fa-solid fa-file-pen"></i>
-                                                        </a>
-                                                        <a class="btn btn-danger" href="{{ route('dosen.delete', $item->id) }}">
+                                            <tr>
+                                                <td class="text-center">{{ $no }}</td>
+                                                <td>{{ $item->name }}</td>
+                                                <td>{{ $item->program_studi->nama_prodi }}</td>
+                                                <td>{{ $item->email }}</td>
+                                                <td>{{ $item->role }}</td>
+                                                <td class="text-center">
+                                                    <a class="btn btn-primary"
+                                                        href="{{ route('dosen.edit', $item->id) }}">
+                                                        <i class="fa-solid fa-file-pen"></i>
+                                                    </a>
+                                                    <form method="POST" action="{{ route('dosen.delete', $item->id) }}">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <button type="submit"
+                                                            class="btn btn-danger show-alert-delete-box" data-toggle="tooltip" title='Delete'>
                                                             <i class="fa-solid fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                            @php
+                                            $no++
+                                            @endphp
+
                                             @endforeach
                                         </tbody>
                                     </table>
@@ -146,3 +160,27 @@
             </section>
         </div>
 </x-app-layout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Apakah anda ingin menghapus data ini?",
+            text: "Jika anda menghapus data ini, data akan dihapus permanent.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Tidak","Iya"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#8cd4f5',
+            confirmButtonText: 'Hapus data!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>

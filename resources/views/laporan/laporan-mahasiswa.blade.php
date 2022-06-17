@@ -38,55 +38,30 @@
                     {{-- <div class="card-header">
                         <h4 class="card-title">Create Admin</h4>
                     </div> --}}
-                    <div class="card-body">
-                        <form action="#" method="get">
-                            <div class="row">
-                                <div class="col-md-6">
+                    <div class="card-body d-flex">
+                        <div class="col ">
+                            <form action="#" method="get">
+                                {{-- <div class="col-md-6 float-start"> --}}
                                     <div class="input-group">
                                         <div class="col-auto">
-                                            {{-- <select class="form-select" name="search" id="search">
-                                                <option value="">Pilih Program Studi</option>
-                                            </select> --}}
-                                            <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}">
+                                            <input type="search" name="search" class="form-control" id="search" placeholder="Cari nama mahasiswa" value="{{ request('search') }}">
                                         </div>
                                         <button class="btn btn-success" type="submit">Cari</button>
                                     </div>
-                                </div>
-                            </div>
+                                {{-- </div> --}}
+                                
+                            </form>
 
-                        </form>
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="programStudi">Program Studi</label>
-                                    <select class="form-select" id="basicSelect">
-                                        <option>IT</option>
-                                        <option>Blade Runner</option>
-                                        <option>Thor Ragnarok</option>
-                                    </select>
-                                </div>
+                            
 
-                                <div class="form-group">
-                                    <label for="basicInput">Nama Admin</label>
-                                    <input type="text" class="form-control" id="basicInput" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="basicInput">E-mail</label>
-                                    <small class="text-muted">eg.<i>someone@example.com</i></small>
-                                    <input type="e-mail" class="form-control" id="basicInput" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="basicInput">Password</label>
-                                    <input type="text" class="form-control" id="basicInput" placeholder="">
-                                </div>
+                            
+                        </div>
+                        
+                            <a href="{{ route('cetak.mahasiswa') }}" target="_blank" class="btn btn-primary">Cetak <i class="fa-solid fa-print"></i></a>
+                        
+                        
 
-                                <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success me-1 mb-1">Save</button>
-                                </div>
-                            </div>
-                        </div> --}}
+                   
                     </div>
                 </div>
             </section>
@@ -114,17 +89,19 @@
                                             <tr>
                                                 <th>No</th>
                                                 <th>Nama Mahasiswa</th>
+                                                <th>NIM</th>
                                                 <th>Program Studi</th>
                                                 <th>Jumlah Pelanggaran</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {{-- @foreach ($admin as $item) --}}
+                                            @foreach ($mahasiswa as $item)
                                                 <tr>
-                                                    <td class="text-center"></td>
-                                                    <td></td>
-                                                    <td></td>
-                                                    <td></td>
+                                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                                    <td>{{ $item->mahasiswa->name }}</td>
+                                                    <td>{{ $item->mahasiswa->nim }}</td>
+                                                    <td>{{ $item->mahasiswa->program_studi->nama_prodi }}</td>
+                                                    <td>{{ $item->total }}</td>
                                                     {{-- <td>{{ $item->program_studi->nama_prodi }}</td>
                                                     <td>{{ $item->email }}</td>
                                                     <td>{{ $item->role }}</td>
@@ -138,7 +115,7 @@
                                                     </td> --}}
                                                 </tr>
                                                 
-                                            {{-- @endforeach --}}
+                                            @endforeach
 
                                         </tbody>
                                     </table>

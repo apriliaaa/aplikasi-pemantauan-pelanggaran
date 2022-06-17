@@ -10,6 +10,8 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 
+
+
 class User extends Authenticatable
 {
     use HasApiTokens;
@@ -70,17 +72,8 @@ class User extends Authenticatable
         return $this->belongsTo(ProgramStudi::class, 'id_prodi');
     }
 
-    public function daftar_pelanggaran()
+    public function daftarpelanggaran()
     {
-        return $this->belongsToMany(DaftarPelanggaran::class);
+        return $this->hasMany(DaftarPelanggaran::class, 'id_user');
     }
-    // public function mahasiswa()
-    // {
-    //     return $this->belongsToMany(Mahasiswa::class, 'detail_pelanggaran', 'id_user');
-    // }
-
-    // public function mahasiswa()
-    // {
-    //     return $this->hasMany(Mahasiswa::class);
-    // }
 }

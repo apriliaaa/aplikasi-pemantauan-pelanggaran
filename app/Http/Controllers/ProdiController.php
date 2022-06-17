@@ -37,7 +37,7 @@ class ProdiController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'nama_prodi' => 'required',
+            'nama_prodi' => 'required|unique',
         ]);
 
         $prodi = ProgramStudi::create([

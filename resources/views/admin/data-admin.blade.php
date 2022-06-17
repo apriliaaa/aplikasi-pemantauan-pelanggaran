@@ -5,16 +5,16 @@
     <div>
         
     </div> --}}
-    
+
     <div id="main">
-        
+
         <header class="navbar navbar-expand navbar-light bg-primary mb-3">
             {{-- <div class="navbar navbar-light bg-primary"> --}}
-                <a href="#" class="burger-btn d-block d-xl-none text-white">
-                    <i class="bi bi-justify fs-3"></i>
-                </a>
-                
-                <h6 class="text-white mx-3">Data Admin</h6>
+            <a href="#" class="burger-btn d-block d-xl-none text-white">
+                <i class="bi bi-justify fs-3"></i>
+            </a>
+
+            <h6 class="text-white mx-3">Data Admin</h6>
             {{-- </div> --}}
         </header>
         <div class="page-heading">
@@ -44,7 +44,8 @@
                                 <div class="col-md-6">
                                     <div class="input-group">
                                         <div class="col-auto">
-                                            <input type="search" name="search" class="form-control" id="search" placeholder="" value="{{ request('search') }}">
+                                            <input type="search" name="search" class="form-control" id="search"
+                                                placeholder="" value="{{ request('search') }}">
                                         </div>
                                         <button class="btn btn-success" type="submit">Cari</button>
                                     </div>
@@ -94,9 +95,9 @@
                         <div class="card">
                             {{-- <div class="card-header">
                                 {{ $admin->links() }}
-                            </div> --}}
-                            <div class="card-content">
-                                {{-- <div class="card-body">
+                        </div> --}}
+                        <div class="card-content">
+                            {{-- <div class="card-body">
                                     <p class="card-text">Add <code>.table-bordered</code> for borders on all sides of the table
                                         and
                                         cells. For
@@ -104,53 +105,85 @@
                                         <code>.table-bordered</code>.
                                     </p>
                                 </div> --}}
-                                <!-- table bordered -->
-                                <div class="table-responsive">
-                                    <table class="table table-bordered mb-0">
-                                        <thead class="text-center">
-                                            <tr>
-                                                <th>No</th>
-                                                <th>Nama Admin</th>
-                                                <th>Program Studi</th>
-                                                <th>E-mail / Username</th>
-                                                <th>Role</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach ($admin as $item)
-                                                <tr>
-                                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $item->name }}</td>
-                                                    {{-- <td>{{ $item->id_prodi }}</td> --}}
-                                                    <td>{{ $item->program_studi->nama_prodi }}</td>
-                                                    <td>{{ $item->email }}</td>
-                                                    <td>{{ $item->role }}</td>
-                                                    <td class="text-center">
-                                                        <a class="btn btn-primary" href="{{ route('admin.edit', $item->id) }}">
-                                                            <i class="fa-solid fa-file-pen"></i>
-                                                        </a>
-                                                        <a class="btn btn-danger" href="{{ route('admin.delete', $item->id) }}">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                
-                                            @endforeach
+                            <!-- table bordered -->
+                            <div class="table-responsive">
+                                <table class="table table-bordered mb-0">
+                                    <thead class="text-center">
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Nama Admin</th>
+                                            <th>Program Studi</th>
+                                            <th>E-mail / Username</th>
+                                            <th>Role</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach ($admin as $item)
+                                        <tr>
+                                            <td class="text-center">{{ $loop->iteration }}</td>
+                                            <td>{{ $item->name }}</td>
+                                            {{-- <td>{{ $item->id_prodi }}</td> --}}
+                                            <td>{{ $item->program_studi->nama_prodi }}</td>
+                                            <td>{{ $item->email }}</td>
+                                            <td>{{ $item->role }}</td>
+                                            <td class="text-center">
+                                                <a class="btn btn-primary " href="{{ route('admin.edit', $item->id) }}">
+                                                    <i class="fa-solid fa-file-pen"></i>
+                                                </a>
+                                                <form method="POST" action="{{ route('admin.delete', $item->id) }}">
+                                                    @csrf
+                                                    <input name="_method" type="hidden" value="DELETE">
+                                                    <button type="submit" class="btn btn-danger show-alert-delete-box" data-toggle="tooltip" title='Delete'>
+                                                        <i class="fa-solid fa-trash"></i>
+                                                    </button>
+                                                </form>
+                                                {{-- <button type="submit" class="btn btn-danger show-alert-delete-box "
+                                                    data-id="{{ $item->id }}" href="{{ route('admin.delete', $item->id) }}">
+                                                    <i class="fa-solid fa-trash"></i>
+                                                </button> --}}
+                                            </td>
+                                        </tr>
 
-                                        </tbody>
-                                    </table>
-                                    {{ $admin->appends(['search' => request()->query('search')])->links() }}
-                                </div>
+                                        @endforeach
+
+                                    </tbody>
+                                </table>
+                                {{ $admin->appends(['search' => request()->query('search')])->links() }}
                             </div>
-
-                            
                         </div>
-                        
-                        
+
+
                     </div>
+
+
                 </div>
-                
-            </section>
         </div>
+
+        </section>
+    </div>
 </x-app-layout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Apakah anda ingin menghapus data ini?",
+            text: "Jika anda menghapus data ini, data akan dihapus permanent.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Tidak","Iya"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#8cd4f5',
+            confirmButtonText: 'Hapus data!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>

@@ -439,14 +439,16 @@ var radialGradientOptions = {
   },
   labels: ["Percent"],
 };
+
+// line area chart
  var areaOptions = {
    series: [
      {
-       name: "series1",
+       name: "Teknik Informatika",
        data: [31, 40, 28, 51, 42, 109, 100],
      },
      {
-       name: "series2",
+       name: "Teknik Industri",
        data: [11, 32, 45, 32, 34, 52, 41],
      },
    ],
@@ -470,6 +472,7 @@ var radialGradientOptions = {
        "2018-09-19T04:30:00.000Z",
        "2018-09-19T05:30:00.000Z",
        "2018-09-19T06:30:00.000Z",
+      // "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct"
      ],
    },
    tooltip: {

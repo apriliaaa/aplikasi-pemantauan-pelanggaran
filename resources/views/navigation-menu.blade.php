@@ -228,8 +228,34 @@
             </div>
         </div>
     </div> --}}
+    {{-- <header class="p-3 mb-3 border-bottom sticky-top bg-white fixed-top">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-dark text-decoration-none">
+                    <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap">
+                        <use xlink:href="#bootstrap" /></svg>
+                </a>
+                <div class="dropdown text-end">
+                    <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" id="dropdownUser1"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="https://github.com/mdo.png" alt="mdo" width="32" height="32" class="rounded-circle">
+                    </a>
+                    <ul class="dropdown-menu text-small" aria-labelledby="dropdownUser1">
+                        <li><a class="dropdown-item" href="#">New project...</a></li>
+                        <li><a class="dropdown-item" href="#">Settings</a></li>
+                        <li><a class="dropdown-item" href="#">Profile</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Sign out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </header> --}}
 
-    <div id="sidebar" class="active">
+
+    <div id="sidebar" class="active sticky-top">
         <div class="sidebar-wrapper active">
             <div class="sidebar-header">
                 <div class="d-flex justify-content-center">
@@ -245,7 +271,7 @@
                         <div class="img-fluid rounded-circle">
                             <a href="index.html"><img class="w-50 h-50" src="/image/Photos.png" alt="" srcset=""></a>
                         </div>
-                        <h6 class="text-capitalize mt-4">Hello {{ Auth::user()->name }}</h6>
+                        <h6 class="text-capitalize mt-4">Hello {{ Auth::user()->role }}</h6>
                     </div>
                     <div class="toggler">
                         <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
@@ -312,17 +338,17 @@
                     </li>
                     @endif
                     {{-- @endif --}}
-
-                    <li class="sidebar-item {{ Request::routeIs('prodi') ? 'active' : '' }}"
-                        aria-current="true">
+                    
+                    @if (auth()->user()->role === "SuperAdmin")
+                    <li class="sidebar-item {{ Request::routeIs('prodi') ? 'active' : '' }}" aria-current="true">
                         <a href="{{ route('prodi') }}" class='sidebar-link'>
                             <i class="fa-solid fa-graduation-cap"></i>
-                            <span>Prodi</span>
+                            <span>Program Studi</span>
                         </a>
                     </li>
+                    @endif
 
-                    <li class="sidebar-item {{ Request::routeIs('pelanggaran') ? 'active' : '' }}"
-                        aria-current="true">
+                    <li class="sidebar-item {{ Request::routeIs('pelanggaran') ? 'active' : '' }}" aria-current="true">
                         <a href="{{ route('pelanggaran') }}" class='sidebar-link'>
                             {{-- <i class="bi bi-file-earmark-medical-fill"></i> --}}
                             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -331,8 +357,7 @@
                         </a>
                     </li>
 
-                    <li class="sidebar-item {{ Request::routeIs('dokumen') ? 'active' : '' }}"
-                        aria-current="true">
+                    <li class="sidebar-item {{ Request::routeIs('dokumen') ? 'active' : '' }}" aria-current="true">
                         <a href="{{ route('dokumen') }}" class='sidebar-link'>
                             {{-- <i class="bi bi-file-earmark-medical-fill"></i> --}}
                             <i class="fa-solid fa-address-card"></i>
@@ -341,7 +366,7 @@
                         </a>
                     </li>
 
-                    @if (auth()->user()->role === "Dosen")
+                    {{-- @if (auth()->user()->role === "Dosen") --}}
                     {{-- @can ('manage-mahasiswa') --}}
                     <li class="sidebar-item {{ Request::routeIs('mahasiswa.create') ? 'active' : '' }}"
                         aria-current="true">
@@ -350,7 +375,7 @@
                             <span>Mahasiswa</span>
                         </a>
                     </li>
-                    @endif
+                    {{-- @endif --}}
 
                     @if (auth()->user()->role == "SuperAdmin" || auth()->user()->role == "Admin")
                     <li class="sidebar-item {{ Request::routeIs('mahasiswa.data') ? 'active' : '' }}"

@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function index(Request $request)
     {
         if($request->has('search')){
-            $admin = User::where('nama','LIKE','%'.$request->search.'%')
+            $admin = User::where('name','LIKE','%'.$request->search.'%')
                 ->orWhere('email','LIKE','%'.$request->search.'%')
                 ->orWhere('role','LIKE','%'.$request->search.'%')
                 ->paginate(10);
@@ -118,8 +118,10 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        $admin = User::findorfail($id);
-        $admin->delete();
+        User::find($id)->delete();
         return back()->with('success', 'Data berhasil dihapus!');
+        // $admin = User::findorfail($id);
+        // $admin->delete();
+        // return back()->with('success', 'Data berhasil dihapus!');
     }
 }

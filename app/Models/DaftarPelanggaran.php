@@ -10,26 +10,27 @@ class DaftarPelanggaran extends Model
     use HasFactory;
     protected $table = 'daftar_pelanggaran';
     protected $fillable = [
-        'id_mahasiswa', 'id_pelanggaran', 'id_user', 'id_item', 'foto'
+        'id_mahasiswa', 'id_pelanggaran', 'id_user', 'id_item', 'id_prodi', 'foto'
     ];
 
-    public function mahasiswa()
-    {
-        return $this->hasOne(Mahasiswa::class, 'id', 'id_mahasiswa');
+    public function mahasiswa(){
+        return $this->belongsTo(Mahasiswa::class, 'id_mahasiswa');
     }
 
-    public function user()
-    {
-        return $this->hasOne(User::class,'id', 'id_user');
+    public function item(){
+        return $this->belongsTo(Item::class, 'id_item');
     }
 
-    public function pelanggaran()
-    {
-        return $this->hasOne(Pelanggaran::class,'id', 'id_pelanggaran');
+    public function pelanggaran(){
+        return $this->belongsTo(Pelanggaran::class, 'id_pelanggaran');
     }
-    
-    public function item()
-    {
-        return $this->hasOne(Item::class, 'id', 'id_item');
+
+    public function user(){
+        return $this->belongsTo(User::class, 'id_user');
     }
+
+    public function program_studi(){
+        return $this->belongsTo(ProgramStudi::class, 'id_prodi');
+    }
+
 }

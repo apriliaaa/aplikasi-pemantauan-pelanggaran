@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDaftarPelanggaranTable extends Migration
+class CreateDaftarPelanggaransTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,13 +15,13 @@ class CreateDaftarPelanggaranTable extends Migration
     {
         Schema::create('daftar_pelanggaran', function (Blueprint $table) {
             $table->id();
-            // $table->foreignId('id_prodi')->constrained('program_studi');
-            $table->foreignId('id_mahasiswa')->constrained('mahasiswa');
-            $table->foreignId('id_pelanggaran')->constrained('pelanggaran');
-            $table->foreignId('id_user')->constrained('users');
-            $table->foreignId('id_item')->constrained('item');
-            $table->string('foto');
             $table->timestamps();
+            $table->foreignId('id_mahasiswa');
+            $table->foreignId('id_pelanggaran');
+            $table->foreignId('id_item');
+            $table->foreignId('id_user');
+            $table->foreignId('id_prodi');
+            $table->string('foto');
         });
     }
 

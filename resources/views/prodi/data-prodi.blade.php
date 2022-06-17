@@ -53,52 +53,6 @@
                                     <button type="submit" class="btn btn-primary mb-3">Save</button>
                                 </div>
                         </form>
-                        {{-- <form action="{{ route('dosen.data') }}" method="get">
-                        <div class="row">
-                            <div class="col-md-6">
-
-                                <div class="input-group">
-                                    <div class="col-auto">
-                                        <input type="search" name="search" class="form-control" id="search"
-                                            placeholder="" value="{{ request('search') }}">
-                                    </div>
-                                    <button class="btn btn-success" type="submit">Cari</button>
-                                </div>
-                            </div>
-                        </div>
-                        </form> --}}
-                        {{-- <div class="row">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="programStudi">Program Studi</label>
-                                    <select class="form-select" id="basicSelect">
-                                        <option>IT</option>
-                                        <option>Blade Runner</option>
-                                        <option>Thor Ragnarok</option>
-                                    </select>
-                                </div>
-
-                                <div class="form-group">
-                                    <label for="basicInput">Nama Admin</label>
-                                    <input type="text" class="form-control" id="basicInput" placeholder="">
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="basicInput">E-mail</label>
-                                    <small class="text-muted">eg.<i>someone@example.com</i></small>
-                                    <input type="e-mail" class="form-control" id="basicInput" placeholder="">
-                                </div>
-                                <div class="form-group">
-                                    <label for="basicInput">Password</label>
-                                    <input type="text" class="form-control" id="basicInput" placeholder="">
-                                </div>
-
-                                <div class="col-sm-12 d-flex justify-content-end">
-                                    <button type="submit" class="btn btn-success me-1 mb-1">Save</button>
-                                </div>
-                            </div>
-                        </div> --}}
                     </div>
                 </div>
             </section>
@@ -145,9 +99,14 @@
                                                     {{-- <a class="btn btn-primary" href="#">
                                                         <i class="fa-solid fa-file-pen"></i>
                                                     </a> --}}
-                                                    <a class="btn btn-danger" href="{{ route('prodi.delete', $item->id) }}">
-                                                        <i class="fa-solid fa-trash"></i>
-                                                    </a>
+                                                    <form method="POST" action="{{ route('prodi.delete', $item->id) }}">
+                                                        @csrf
+                                                        <input name="_method" type="hidden" value="DELETE">
+                                                        <button type="submit"
+                                                            class="btn btn-danger show-alert-delete-box" data-toggle="tooltip" title='Delete'>
+                                                            <i class="fa-solid fa-trash"></i>
+                                                        </button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                             @endforeach
@@ -162,3 +121,27 @@
             </section>
         </div>
 </x-app-layout>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script type="text/javascript">
+    $('.show-alert-delete-box').click(function(event){
+        var form =  $(this).closest("form");
+        var name = $(this).data("name");
+        event.preventDefault();
+        swal({
+            title: "Apakah anda ingin menghapus data ini?",
+            text: "Jika anda menghapus data ini, data akan dihapus permanent.",
+            icon: "warning",
+            type: "warning",
+            buttons: ["Tidak","Iya"],
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#8cd4f5',
+            confirmButtonText: 'Hapus data!'
+        }).then((willDelete) => {
+            if (willDelete) {
+                form.submit();
+            }
+        });
+    });
+</script>
